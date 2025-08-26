@@ -1,0 +1,49 @@
+{
+	"nodes":[
+		{
+			"name": "Mall",
+			"events": [
+				{"conditions": [],
+					"results": [["print_text", "You decide it is best to skip scholl and head to the mall instead.."]]
+			}],
+			"choices": [
+				{
+				"first":"smoke",
+				"second":"behind mall",
+				"destination": "Story Start",
+				"conditions":[],
+				"results":[]},
+				{
+				"first":"go inside",
+				"second":"mall",
+				"destination": "Mall",
+				"conditions":[],
+				"results":[]}
+			]
+		},
+		{
+			"name": "Go to school"
+		},
+		{
+			"name": "Story Start",
+			"events": [
+				{"conditions": [],
+					"results": [["print_text", "You are attending an elite dance school in Crystal Tokyo City."]]
+			}],
+			"choices": [
+				{
+				"first":"go to",
+				"second":"school",
+				"destination": "Story Start",
+				"conditions":[],
+				"results":[]},
+				{
+				"first":"skip",
+				"second":"school",
+				"destination": "Mall",
+				"conditions":[],
+				"results":[]}
+			]
+		}
+	]
+}

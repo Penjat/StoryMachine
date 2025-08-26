@@ -1,0 +1,348 @@
+{
+  "nodes" : [
+    {
+      "id" : "00000000-0000-0000-0000-000000000000",
+      "name" : "Start",
+      "events" : [
+        {
+          "id" : "8443AE28-CFA2-4C48-A2B2-9E9E943ECDCB",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "A532ED56-AD45-403B-93A7-E9A813F76A7D",
+              "type" : "printText",
+              "data" : "You wake up on a beach with no recolection of how you got there."
+            }
+          ]
+        }
+      ],
+      "choices" : [
+        {
+          "id" : "674DC28B-64C9-409D-BD3C-A7B2C7327510",
+          "destination" : "B59D7527-BBCF-441B-AF2B-EB34E00FE2C4",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "Look around"
+        },
+        {
+          "id" : "6FC5B146-B79C-4DCD-AE19-1E13658FA792",
+          "destination" : "24C2FB47-90A0-4CD1-B7FC-1CDF6D22088A",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "Cry"
+        },
+        {
+          "id" : "7916B2D5-6FC5-4F3B-903F-E053DFA4F9C2",
+          "destination" : "DE17D4BA-97B0-481F-9867-850CAB851217",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "back to sleep"
+        }
+      ]
+    },
+    {
+      "id" : "B59D7527-BBCF-441B-AF2B-EB34E00FE2C4",
+      "name" : "look",
+      "events" : [
+        {
+          "id" : "00C2CEB4-227C-44FF-808C-372844CF7656",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "245CE626-36D9-4FD0-855B-EE9A3C60A481",
+              "type" : "printText",
+              "data" : "You look around to get a better sense of your surroundings.  You see a crashed jetsky in the waves behind you. And some trees further up the beach."
+            }
+          ]
+        }
+      ],
+      "choices" : [
+        {
+          "id" : "522CD1E5-8081-43F0-98D8-4B7A648EE52C",
+          "destination" : "289E1293-5DB6-4AAB-98A8-8DC3AD911718",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "go to trees"
+        },
+        {
+          "id" : "2E069F98-AA26-429F-8F92-B477CC6A1D1F",
+          "destination" : "7B68ECDE-612B-4241-ABEF-741345D78BAE",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "investigate jetski"
+        }
+      ]
+    },
+    {
+      "id" : "24C2FB47-90A0-4CD1-B7FC-1CDF6D22088A",
+      "name" : "cry",
+      "events" : [
+        {
+          "id" : "B4A8FD81-5E4A-4748-A792-14ECC45BF056",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "78ABF37B-195F-4CC7-9F9E-FD3D16071B4A",
+              "type" : "printText",
+              "data" : "You begin to sob and cry about how hopeless your situation is.  Before you know it you feel someone patting your back in a comforting way.\nYou look up to see how it is…\nIt is a friendly giant crab!\n"
+            }
+          ]
+        }
+      ],
+      "choices" : [
+        {
+          "id" : "2641A6F3-AD35-436B-839C-FC3DAEB9BEE6",
+          "destination" : "6D212EDB-CC65-4A74-8EF2-5579DEAE1327",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "Get to know crab"
+        }
+      ]
+    },
+    {
+      "id" : "DE17D4BA-97B0-481F-9867-850CAB851217",
+      "name" : "sleep",
+      "events" : [
+        {
+          "id" : "4377D3D9-69E9-45FD-91B7-185F94050000",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "C37A59E9-AEF3-4D00-B56C-8C9507F3F049",
+              "type" : "printText",
+              "data" : "You close your eyes, maybe after some rest things will look beeterYou fall back asleep..."
+            }
+          ]
+        },
+        {
+          "id" : "2473DDB1-F961-4359-8A66-2AE7A4D12CD2",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "F59A9D12-819F-4EDB-A228-FA87ED2DA9D4",
+              "type" : "printText",
+              "data" : "You sleep for a long time..."
+            }
+          ]
+        }
+      ],
+      "choices" : [
+
+      ]
+    },
+    {
+      "id" : "7B68ECDE-612B-4241-ABEF-741345D78BAE",
+      "name" : "jetski",
+      "events" : [
+        {
+          "id" : "69735B7B-1509-4140-9E51-92930A864699",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "CBEBD934-18BE-48CA-AF37-40F788DECBAD",
+              "type" : "printText",
+              "data" : "you decide to investigate the jetski.  GEtting closer you can smell the fumes of burning oil and plastic.  Probably not riding out of here on that anytime soon.  You do notice a small pocketknife in one of the handels.  "
+            },
+            {
+              "id" : "F3693803-964C-4C63-B92F-F41BCBF6D115",
+              "type" : "writeWord",
+              "data" : "knife"
+            }
+          ]
+        }
+      ],
+      "choices" : [
+        {
+          "id" : "068477F6-5202-49E2-8512-3209D27F531B",
+          "destination" : "459B79C2-92EE-486B-B5E0-3E2B66F2EABF",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "practice stabbing"
+        },
+        {
+          "id" : "813397E9-7CC2-4B43-B468-B4F987F5BED6",
+          "destination" : "289E1293-5DB6-4AAB-98A8-8DC3AD911718",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "go to trees"
+        }
+      ]
+    },
+    {
+      "id" : "6D212EDB-CC65-4A74-8EF2-5579DEAE1327",
+      "name" : "crab",
+      "events" : [
+        {
+          "id" : "113B9258-8A80-43CA-9B3C-3DC7F7443EE0",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "67E889B2-F430-41DF-9B6D-ED3F9D1C3F1D",
+              "type" : "printText",
+              "data" : "You and your new crab friend talk for hours getting to know everything about each other.  \n\nSoon you have forgoten all your troubles.  "
+            }
+          ]
+        }
+      ],
+      "choices" : [
+        {
+          "id" : "1DB40C26-E3B4-433F-A60E-028766946D02",
+          "destination" : "1144C49C-0E7F-43C0-AC11-536E517F1EBD",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "continue talking"
+        },
+        {
+          "id" : "85ED7DA1-CDA9-4F3E-8FBB-B5700AD6D264",
+          "destination" : "8DC0CB77-204E-48EB-853A-88714959346F",
+          "results" : [
+
+          ],
+          "conditions" : [
+
+          ],
+          "text" : "ask about leaving"
+        }
+      ]
+    },
+    {
+      "id" : "1144C49C-0E7F-43C0-AC11-536E517F1EBD",
+      "name" : "talk",
+      "events" : [
+        {
+          "id" : "259AB5CE-7B4F-43D0-936C-DFF3031C0042",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "2E0843AD-7C95-4257-B338-08A5AE5AF69D",
+              "type" : "printText",
+              "data" : "You continue talking long into the night and become best frineds. You move into the crabs cottage and having a wonderful life.\n\nThe End"
+            }
+          ]
+        }
+      ],
+      "choices" : [
+
+      ]
+    },
+    {
+      "id" : "8DC0CB77-204E-48EB-853A-88714959346F",
+      "name" : "leave",
+      "events" : [
+        {
+          "id" : "90258D6C-BB2A-4308-881E-3804F9F94635",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "62E93EAB-FE76-4F00-8F77-1F8F084E2D50",
+              "type" : "printText",
+              "data" : "Though a little sad that your time together has come to an end, the crab sets you up with a little sail boat.  You set out to see and make your way home.  You wonder if you will ever see your crab friend again.\n\nThe End"
+            }
+          ]
+        }
+      ],
+      "choices" : [
+
+      ]
+    },
+    {
+      "id" : "289E1293-5DB6-4AAB-98A8-8DC3AD911718",
+      "name" : "trees",
+      "events" : [
+        {
+          "id" : "0C42CA5C-2FD9-4B75-8C2A-653AAD35024C",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "B1587C59-FC8D-41D0-B80A-E7AA67080391",
+              "type" : "printText",
+              "data" : "You decide to investigate the trees.  You find just beyond the trees a rocket ship. \nSweet.\nYou take the rocket home.\n\nThe End"
+            }
+          ]
+        }
+      ],
+      "choices" : [
+
+      ]
+    },
+    {
+      "id" : "459B79C2-92EE-486B-B5E0-3E2B66F2EABF",
+      "name" : "stab",
+      "events" : [
+        {
+          "id" : "7B15B1DA-ADB2-4747-97CC-3FCACF906BAE",
+          "conditions" : [
+
+          ],
+          "results" : [
+            {
+              "id" : "D97649C7-152B-4735-A4DC-7E806DFCD276",
+              "type" : "printText",
+              "data" : "It isn’t long before all your stabbing practice pays off and you are scouted by a stabbing agency on the island.  Though you do sometimes dream of going home… you know this is for the best.\n\nThe End."
+            }
+          ]
+        }
+      ],
+      "choices" : [
+
+      ]
+    }
+  ],
+  "containerName" : "my container"
+}
