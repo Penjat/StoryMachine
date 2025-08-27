@@ -7,6 +7,7 @@ from .Subprograms.TarotReader import *
 from .Subprograms.AltTarot import *
 # from .Subprograms.LiveALive import *
 from .Subprograms.LifeALife2 import LifeALife, Story, Chapter
+from .Subprograms.BluetoothConnect import BluetoothConnect
 
 class StoryMachine:
 	def __init__(self, control_service, printer_service, camera_service, key):
@@ -87,6 +88,9 @@ class StoryMachine:
 			self.sub_program = 0
 			self.menu.update_display()
 
+		if command == "Bluetooth":
+			self.sub_program = BluetoothConnect(self.display_output, self.command_subject)
+
 		if command == "Maze Maker":
 			self.sub_program = MazeMaker(self.display_output, self.command_subject)
 
@@ -101,80 +105,18 @@ class StoryMachine:
 		if command == "contrast camera":
 			my_array =  self.camera_service.image_to_array2(self.camera_service.camera_image())
 			self.printer_service.print_array(my_array)
-			
-		if command == "test":
-			maze_array = np.zeros((64, 64))
-			self.printer_service.print_text('this is some more awesometaski text that I would like to wrap', [])
-			self.printer_service.print_text('abcdefghijklmnopqrstuvwxyzabcdef', ['M'])
-			self.printer_service.print_text('abcdefghijklmnop', ['L'])
 
-		if command == "push it!!!!":
-			self.display_output.on_next("nice!")
-
-		if command == "tell me a story":
-			 
-			self.printer_service.print_text('Some time ago,', ['L'])
-			self.printer_service.print_text('on the internet...', ['L'])
-			self.printer_service.feed(3)
-			self.printer_service.print_text('thermal printer project')
-			load_img_rz = Image.open("/home/pi/Documents/HauntedPrinter2/Images/printer_idea.png").convert('1').resize((384,384))
-			data = asarray(load_img_rz)
-			inverter = lambda x: 1-x
-			data = inverter(data)
-			self.printer_service.print_array(data)
-			self.printer_service.feed(2)
-			# maze_array[:1,:] = 1
-			# maze_array[:,:1] = 1
-			# maze_array[:,-1:] = 1
-			# maze_array[-1:,:] = 1
-			# self.printer_service.print_array(maze_array)
-
-		if command == "talk to me":
-			string = ""
-			options = ["0", "1"]
-			for y in range(0, 4):
-				
-				for x in range(0, 32):
-					string += options[random.randrange(0,2)]
-
-			self.printer_service.print_text(string, ["M"])
-
-		if command == "load ideas":
-			self.printer_service.print_text('IDEAS:', ['L','Center', 'Underline', 'DW'])
-			self.printer_service.feed(1)
-			self.printer_service.print_text('+Instant Camera', ['L'])
-			self.printer_service.print_text('+Maze Maker', ['L'])
-			self.printer_service.print_text('+Tarot Card Reader', ['L'])
-			self.printer_service.print_text('+Still Image Games', ['L'])
-			self.printer_service.print_text('+Random Bible Quotes', ['L'])
-			self.printer_service.print_text('+Ai Camera', ['L','DW'])
-			self.printer_service.print_text('+Alt. Universe  Tarot', ['L'])
-
-			self.printer_service.print_text('+Instant Comic creator', ['L'])
-			self.printer_service.print_text('+ASCII art generator', ['L'])
-			self.printer_service.print_text('+Daily Journaling', ['L'])
-			self.printer_service.print_text('+Magic Incantations', ['L'])
-			self.printer_service.print_text('+Still image games', ['L'])
-			self.printer_service.print_text('+Random Bible Quotes', ['L'])
-			self.printer_service.print_text('+Famous novel games', ['L'])
-			self.printer_service.print_text('+Story Machine', ['L'])
-			self.printer_service.print_text('...', ['L'])
-			self.printer_service.feed(3)
-
-			
-
-
-		# if output == "bible qoute":
-		#     printer.justify('L')
-		#     printer.setSize('S')
-		#     print("random bible quote")
-		#     file1 = open('bible.txt', 'r')
-		#     lines = file1.readlines()
+		if output == "bible qoute":
+		    printer.justify('L')
+		    printer.setSize('S')
+		    print("random bible quote")
+		    file1 = open('bible.txt', 'r')
+		    lines = file1.readlines()
 			  
-		#     count = 0
-		#     line = random.choice(lines)
-		#     print("{}".format(line.strip()))
-		#     print_text("{}".format(line.strip()))
+		    count = 0
+		    line = random.choice(lines)
+		    print("{}".format(line.strip()))
+		    print_text("{}".format(line.strip()))
 
 		if command == "Tarot Reading":
 			self.sub_program = TarotReader(self.display_output, self.command_subject)

@@ -17,7 +17,7 @@ class Menu:
         self.current_selection = 0.0
         # self.menu_items = ["take pic","contrast pic","Maze Maker","Tarot Reading", "print pic", "alt tarot", "LifeALife", "feed","quit", "test"]
 
-        self.menu_items = ["quit", "tell me a story", "talk to me", "load ideas", "camera", "contrast camera", "push it!!!!", "Maze Maker"]
+        self.menu_items = ["quit", "camera", "contrast camera", "Maze Maker", "Bluetooth"]
 
         self.left_knob_input.subscribe(lambda x: self.process_left_knob(x))
         self.right_knob_input.subscribe(lambda x: self.process_right_knob(x))
