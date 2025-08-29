@@ -1,6 +1,6 @@
 import sys
 print(sys.path)
-sys.path.append('/home/pi/Documents/HauntedPrinter2')
+sys.path.append('/home/pi/Documents/StoryMachine/HauntedPrinter2')
 
 
 def main(args=None):

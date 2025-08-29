@@ -7,13 +7,10 @@ class BluetoothConnect:
         self.display_output = display_output
         self.printer_output = printer_output
         self.is_advertizing = False
-        self.menu_items = _menu_items
-        
+
+        self.menu_items = ["main menu", "start_advertizing"]
         self._current_selection = 0.0
 
-    @property
-    def _menu_items(self):
-        return ["main menu", is_advertizing ? "stop_advertizing" : "start_advertizing"]
 
     def write_callback(self, value, options):
         print("📩 Received from client:", value.decode(errors="ignore"))
