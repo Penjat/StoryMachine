@@ -127,7 +127,7 @@ for i, icon in enumerate(icons):
 # 	lcd.write_string(text)
 # 	sleep(0.01)
 
-
+icon_ref = ["\x00","\x01","\x02","\x03","\x04","\x05","\x06","\x07"]
 
 # Make a letter explosion
 for i in range(32):
@@ -138,15 +138,20 @@ for i in range(32):
 
 # Everything flashing random
 
+	output_array = []#[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]
+	chars = string.printable[:-5]
+	# for i in range(32):
+	# 	output_array.append(random.choice(chars))
+	lcd.cursor_pos = (idy, idx)
+	lcd.write_string("hello")
 while True:
 	# output_array = [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]
-	output_array = []
-	chars = string.printable[:-5]
-	for i in range(32):
-		output_array.append(random.choice(chars))
-
-	lcd.write_string(output_array)
-	sleep(1)
+	
+	idx = random.randrange(16)
+	idy = random.randrange(2)
+	lcd.cursor_pos = (idy, idx)
+	lcd.write_string(random.choice(icon_ref))
+	sleep(0.01)
 
 
 
