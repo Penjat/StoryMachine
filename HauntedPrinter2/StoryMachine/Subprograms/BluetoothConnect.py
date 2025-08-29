@@ -7,6 +7,7 @@ class BluetoothConnect:
         self.display_output = display_output
         self.printer_output = printer_output
         self.is_advertizing = False
+
         self.menu_items = ["main menu", "start_advertizing"]
         self._current_selection = 0.0
 

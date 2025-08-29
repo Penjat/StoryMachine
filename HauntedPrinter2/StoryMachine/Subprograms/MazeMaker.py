@@ -1,9 +1,11 @@
 from rx.subject import Subject
 import numpy as np
 import copy
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from numpy import asarray
 import random
+from matplotlib import pyplot
+
 
 class MazeMaker:
     def __init__(self, display_output, printer_output):
@@ -13,8 +15,7 @@ class MazeMaker:
 
         self.maze_array = np.zeros((1,1))
 
-        self._maze_width = 48.0
-        self._maze_height = 384.0
+        self._maze_height = 50
         self._wall_size = 8.0
         
         self.current_selection = 0.0
@@ -45,7 +46,7 @@ class MazeMaker:
 
     @property
     def maze_width(self):
-        return int(self._maze_width)
+        return int(376.0/self.wall_size)
 
     # @maze_width.setter
     # def maze_width(self, value):
@@ -54,7 +55,10 @@ class MazeMaker:
 
     @property
     def maze_height(self):
-        return int(self._maze_height)
+        if self._maze_height % 2 == 0:
+            return int(max(self._maze_height + 1, 11))
+        
+        return int(max(self._maze_height, 11))
 
     # @maze_height.setter
     # def maze_height(self, value):
@@ -63,7 +67,9 @@ class MazeMaker:
 
     @property
     def wall_size(self):
-        return int(self._wall_size)
+        if self._maze_height % 2 == 0:
+            return int(self._wall_size)
+        return int(self._wall_size+1)
 
     # @wall_size.setter
     # def wall_size(self, value):
@@ -135,11 +141,57 @@ class MazeMaker:
             else:
                 open_tiles.remove(tile)
             
+    # --------------- Processing Methods -----------------
 
     def expand_maze(self):
         self.maze_array = np.repeat(self.maze_array, self.wall_size, axis=1)
         self.maze_array = np.repeat(self.maze_array, self.wall_size, axis=0)
         print("done")
+
+    def dijkstra(self):
+        first_end, _ = self._dijkstra(self.maze_array, (1,1))
+        self.maze_array[self.maze_array > 1] = 1
+        second_end, length = self._dijkstra(self.maze_array, first_end)
+
+        self.maze_array[first_end[0],first_end[1]] = length + 5
+        self.maze_array[second_end[0],second_end[1]] = length + 5
+
+        return first_end, second_end, length
+
+
+    def _dijkstra(self, array, starting_pos):
+        print("dijkstra...")
+        open_cells = []
+        open_cells.append(starting_pos)
+
+        length = 2
+        self.maze_array[starting_pos[0], starting_pos[1]] = length
+        last_cell = starting_pos
+
+        while len(open_cells) != 0:
+            length += 1
+
+            new_cells = []
+
+            for position in open_cells:
+                top = (position[0],position[1]-1)
+                bottom = (position[0],position[1]+1)
+                left = (position[0]-1,position[1])
+                right = (position[0]+1,position[1])
+
+                
+                for cell in [top, bottom, left, right]:
+                    if self.maze_array[cell[0], cell[1]] == 1:
+                        self.maze_array[cell[0], cell[1]] = length
+                        new_cells.append(cell)
+                        last_cell = cell
+
+            open_cells = new_cells
+
+
+        return last_cell, length
+
+
 
     # --------------- Input Methods -----------------
 
@@ -184,6 +236,24 @@ class MazeMaker:
                 
             else:
                 print(self.selection)
+
+if __name__ == "__main__":
+    print("Maze maker demo...")
+
+    display_subject = Subject()
+    printer_subject = Subject()
+
+    display_subject.subscribe(lambda x: print(x))
+    printer_subject.subscribe(lambda x: print(x))
+
+    generator = MazeMaker(display_subject, printer_subject)
+    generator.create_maze()
+    maze_array, start, end = generator.dijkstra()
+    generator.expand_maze()
+    pyplot.imshow(generator.maze_array)
+    pyplot.show()
+
+
 
 
 
