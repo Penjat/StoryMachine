@@ -4,6 +4,7 @@ import copy
 from PIL import Image
 from numpy import asarray
 import random
+from matplotlib import pyplot
 
 class MazeMaker:
     def __init__(self, display_output, printer_output):
@@ -13,9 +14,8 @@ class MazeMaker:
 
         self.maze_array = np.zeros((1,1))
 
-        self._maze_width = 48.0
-        self._maze_height = 384.0
-        self._wall_size = 8.0
+        self._maze_height = 13
+        self._wall_size = 2.0
         
         self.current_selection = 0.0
         self.menu_items = ["wall size", "create maze", "set width", "set height", "main menu"]
@@ -45,7 +45,7 @@ class MazeMaker:
 
     @property
     def maze_width(self):
-        return int(self._maze_width)
+        return int(376.0/self.wall_size)
 
     # @maze_width.setter
     # def maze_width(self, value):
@@ -54,7 +54,10 @@ class MazeMaker:
 
     @property
     def maze_height(self):
-        return int(self._maze_height)
+        if self._maze_height % 2 == 0:
+            return int(max(self._maze_height + 1, 11))
+        
+        return int(max(self._maze_height, 11))
 
     # @maze_height.setter
     # def maze_height(self, value):
@@ -63,7 +66,9 @@ class MazeMaker:
 
     @property
     def wall_size(self):
-        return int(self._wall_size)
+        if self._maze_height % 2 == 0:
+            return int(self._wall_size)
+        return int(self._wall_size+1)
 
     # @wall_size.setter
     # def wall_size(self, value):
@@ -184,6 +189,23 @@ class MazeMaker:
                 
             else:
                 print(self.selection)
+
+if __name__ == "__main__":
+    print("Maze maker demo...")
+
+    display_subject = Subject()
+    printer_subject = Subject()
+
+    display_subject.subscribe(lambda x: print(x))
+    printer_subject.subscribe(lambda x: print(x))
+
+    generator = MazeMaker(display_subject, printer_subject)
+    generator.create_maze()
+
+    pyplot.imshow(generator.maze_array)
+    pyplot.show()
+
+
 
 
 

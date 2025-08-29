@@ -6,9 +6,9 @@ class BluetoothConnect:
     def __init__(self, display_output, printer_output):
         self.display_output = display_output
         self.printer_output = printer_output
-        self.is_advertizing = false
+        self.is_advertizing = False
         self.menu_items = _menu_items
-        self.print_reading = False
+        
         self._current_selection = 0.0
 
     @property
@@ -21,7 +21,7 @@ class BluetoothConnect:
 
     def start_advertizing(self):
         # Replace with your Pi’s Bluetooth adapter MAC (find with `hciconfig`)
-        ADAPTER_ADDR = "XX:XX:XX:XX:XX:XX"
+        ADAPTER_ADDR = "DC:A6:32:3D:E3:00"
 
         periph = peripheral.Peripheral(adapter_addr=ADAPTER_ADDR, local_name="MyPi")
 
