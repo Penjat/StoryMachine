@@ -1,5 +1,5 @@
 {
-  "Sword of Dawn": {"name": "Sword of Dawn", "location": "High Bluff"},
-  "Healing Potion": {"name": "Healing Potion", "location": "Palm Beach"},
-  "Magic Lantern": {"name": "Magic Lantern", "location": "Rocky Outcrop"}
+  "Rusty Dagger": { "name": "Rusty Dagger", "location": "Jorjo" },
+  "Leather Boots": { "name": "Leather Boots", "location": "Jorjo" },
+  "Torn Map": { "name": "Torn Map", "location": "Jorjo" }
 }

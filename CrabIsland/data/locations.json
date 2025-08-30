@@ -1,6 +1,6 @@
 {
   "Sandy Beach 1": {
-    "connections": ["Sandy Beach 2"],
+    "connections": ["Sandy Beach 2", "Sandy Beach 6"],
     "description": "A wide stretch of golden sand, warm underfoot.",
     "features": ["seashells", "driftwood", "footprints"]
   },
@@ -75,8 +75,13 @@
     "features": ["seabirds", "jagged edges", "grass tufts"]
   },
   "Sandy Beach 6": {
-    "connections": ["Cliffside 5"],
+    "connections": ["Cliffside 5","THE END"],
     "description": "The final stretch of sand, quiet and remote.",
     "features": ["seashells", "warm sand", "calm tide"]
+  },
+  "THE END": {
+    "connections": [],
+    "description": "Walk off into the sunset",
+    "features": []
   }
 }
