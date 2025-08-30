@@ -6,6 +6,10 @@ class Character:
         self.location = location
         self.speed = speed
 
+    @property
+    def isAlive(self):
+        return self.health > 0
+
     def to_json(self):
         return {
             "name": self.name,

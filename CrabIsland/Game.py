@@ -86,14 +86,18 @@ class Game:
 
     def take_turn(self, choice1, choice2):
         characters = self.npcs_at_location(self.current_location) + [self.character]
-        sorted_chars = sorted(characters, key=lambda c: c.speed, reverse=True)
+        sorted_chars = sorted(
+    		[c for c in characters if c.isAlive],
+    		key=lambda c: c.speed,
+    		reverse=True
+		)
 
         for character in sorted_chars:
             if character == self.character:
                 self.process(choice1, choice2)
             else:
             	# decide NPC action
-            	if self.character.location == character.location:
+            	if self.character.location == character.location & self.character.isAlive:
             		self.attack(character, self.character)
             	
             	
