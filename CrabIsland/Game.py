@@ -129,9 +129,15 @@ items = {
 def items_at_location(location_name):
 	return [info["name"] for info in items.values() if info["location"] == location_name]
 
-def get_npcs_at_location(location):
-	"""Return a list of NPC names at the given location."""
-	return [npc["name"] for npc in npcs if npc["location"] == location]
+def get_npcs_at_location(npcs_list, location):
+    return [npc for npc in npcs_list if npc["location"] == location]
+
+
+def get_npc_by_name(npcs, name):
+    for npc in npcs:
+        if npc["name"] == name:
+            return npc
+    return None
 
 
 class Game:
@@ -175,12 +181,36 @@ class Game:
 			else:
 				print(f"you do not have a {choice2}")
 
+		elif choice1 == "attack":
+			npcs_here = get_npcs_at_location(npcs, self.current_location)
+
+			target = next((npc for npc in npcs_here if npc["name"] == choice2), None)
+
+			if target:
+			    print("Target found:", target)
+			    damage = self.character["strength"]
+			    target["health"] -= damage
+			    target_name = target["name"]
+			    main_character_name = self.character["name"]
+			    print(f"{main_character_name} deals {damage} damage to {target_name}.", target)
+			else:
+			    print("No such NPC at this location")
+
 	def take_turn(self, choice1, choice2):
 		characters = npcs + [self.character]
 		sorted_chars = sorted(characters, key=lambda c: c["speed"], reverse=True)
 
 		for character in sorted_chars:
-			print(character["name"])
+			if character == self.character:
+				self.process(choice1, choice2)
+			else:
+				main_character_name = self.character["name"]
+				character_name = character["name"]
+				print(f"{character_name} attacks {main_character_name}!")
+				damage = character["strength"]
+				self.character["health"] -= damage
+				print(f"deals {damage} damage!")
+				
 
 
 character = {
@@ -200,7 +230,7 @@ while game.is_playing:
 
 	print(f"{connected_locations}")
 	print(f"{items_at_location(game.current_location)}")
-	print(f"{get_npcs_at_location(game.current_location)}")
+	print(f"{get_npcs_at_location(npcs, game.current_location)}")
 
 	choice1 = input("what do you do: ")
 	choice2 = input("+: ")
