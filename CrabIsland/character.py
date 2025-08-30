@@ -18,3 +18,10 @@ class Character:
             "location": self.location,
             "speed": self.speed
         }
+
+    def deal_dmg(self, dmg, source_name):
+        self.health -= dmg
+
+        print(f"{source_name} deals {dmg} damage to {self.name}!")
+        if self.isAlive == False:
+            print(f"{self.name} was killed by {source_name}")

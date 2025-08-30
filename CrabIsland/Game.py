@@ -81,8 +81,7 @@ class Game:
 
     def attack(self, attacker, target):
     	damage = attacker.strength # TODO: more modifieres here
-    	target.health -= damage
-    	print(f"{attacker.name} deals {damage} damage to {target.name}. {target.name} has {target.health} HP left.")
+    	target.deal_dmg(damage, attacker.name)
 
     def take_turn(self, choice1, choice2):
         characters = self.npcs_at_location(self.current_location) + [self.character]
@@ -97,7 +96,7 @@ class Game:
                 self.process(choice1, choice2)
             else:
             	# decide NPC action
-            	if self.character.location == character.location & self.character.isAlive:
+            	if (self.character.location == character.location) & character.isAlive:
             		self.attack(character, self.character)
             	
             	
