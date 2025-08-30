@@ -74,24 +74,31 @@ class Game:
             target = next((npc for npc in npcs_here if npc.name == choice2), None)
 
             if target:
-                damage = self.character.strength
-                target.health -= damage
-                print(f"{self.character.name} deals {damage} damage to {target.name}. {target.name} has {target.health} HP left.")
+                self.attack(self.character, target)
+                
             else:
                 print("No such NPC at this location")
 
+    def attack(self, attacker, target):
+    	damage = attacker.strength # TODO: more modifieres here
+    	target.health -= damage
+    	print(f"{attacker.name} deals {damage} damage to {target.name}. {target.name} has {target.health} HP left.")
+
     def take_turn(self, choice1, choice2):
-        characters = self.npcs + [self.character]
+        characters = self.npcs_at_location(self.current_location) + [self.character]
         sorted_chars = sorted(characters, key=lambda c: c.speed, reverse=True)
 
         for character in sorted_chars:
             if character == self.character:
                 self.process(choice1, choice2)
             else:
-                print(f"{character.name} attacks {self.character.name}!")
-                damage = character.strength
-                self.character.health -= damage
-                print(f"deals {damage} damage! {self.character.name} has {self.character.health} HP left.")
+            	# decide NPC action
+            	if self.character.location == character.location:
+            		self.attack(character, self.character)
+            	
+            	
+                
+
 
     def loop(self):
         while self.is_playing:

@@ -8,3 +8,4 @@ class Item:
             "name": self.name,
             "location": self.location
         }
+        
