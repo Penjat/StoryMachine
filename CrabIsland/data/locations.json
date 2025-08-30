@@ -1,0 +1,82 @@
+{
+  "Sandy Beach 1": {
+    "connections": ["Sandy Beach 2"],
+    "description": "A wide stretch of golden sand, warm underfoot.",
+    "features": ["seashells", "driftwood", "footprints"]
+  },
+  "Sandy Beach 2": {
+    "connections": ["Sandy Beach 1", "Rocky Beach 1"],
+    "description": "The sand is speckled with small stones and seaweed.",
+    "features": ["crabs", "dunes", "broken shells"]
+  },
+  "Rocky Beach 1": {
+    "connections": ["Sandy Beach 2", "Cliffside 1"],
+    "description": "Sharp rocks jut out of the sand, slick with sea spray.",
+    "features": ["tide pools", "barnacles", "seaweed"]
+  },
+  "Cliffside 1": {
+    "connections": ["Rocky Beach 1", "Cliffside 2"],
+    "description": "Towering cliffs rise above the crashing surf.",
+    "features": ["gulls", "rock ledges", "windy gusts"]
+  },
+  "Cliffside 2": {
+    "connections": ["Cliffside 1", "Shipwreck Cove"],
+    "description": "A narrow path runs along the edge of a dangerous cliff.",
+    "features": ["loose stones", "shadows", "salt spray"]
+  },
+  "Shipwreck Cove": {
+    "connections": ["Cliffside 2", "Sandy Beach 3"],
+    "description": "The remains of a ship lie broken and half-buried in the sand.",
+    "features": ["splintered wood", "rusted nails", "tattered sail"]
+  },
+  "Sandy Beach 3": {
+    "connections": ["Shipwreck Cove", "Old Cabin"],
+    "description": "Soft sand and gentle waves lap against the shore.",
+    "features": ["starfish", "coconuts", "driftwood"]
+  },
+  "Old Cabin": {
+    "connections": ["Sandy Beach 3", "Rocky Beach 2"],
+    "description": "A weathered wooden cabin stands, abandoned but sturdy.",
+    "features": ["broken door", "charcoal hearth", "dusty shelves"]
+  },
+  "Rocky Beach 2": {
+    "connections": ["Old Cabin", "Cliffside 3"],
+    "description": "Jagged stones crunch underfoot as the waves crash nearby.",
+    "features": ["kelp", "slick stones", "crabs"]
+  },
+  "Cliffside 3": {
+    "connections": ["Rocky Beach 2", "Cliffside 4"],
+    "description": "The cliffs tower higher here, casting long shadows at dusk.",
+    "features": ["ravens", "cold winds", "lichen"]
+  },
+  "Cliffside 4": {
+    "connections": ["Cliffside 3", "Sandy Beach 4"],
+    "description": "Steep rocks fall sharply into the sea, dangerous footing.",
+    "features": ["loose gravel", "sparse grass", "sea spray"]
+  },
+  "Sandy Beach 4": {
+    "connections": ["Cliffside 4", "Sandy Beach 5"],
+    "description": "A peaceful beach where the waves roll in gently.",
+    "features": ["tiny shells", "driftwood", "shorebirds"]
+  },
+  "Sandy Beach 5": {
+    "connections": ["Sandy Beach 4", "Rocky Beach 3"],
+    "description": "The sand here is mixed with pebbles and glassy stones.",
+    "features": ["smooth stones", "sea glass", "driftwood"]
+  },
+  "Rocky Beach 3": {
+    "connections": ["Sandy Beach 5", "Cliffside 5"],
+    "description": "A rough shore with jagged rocks and tide pools.",
+    "features": ["anemones", "crabs", "urchins"]
+  },
+  "Cliffside 5": {
+    "connections": ["Rocky Beach 3", "Sandy Beach 6"],
+    "description": "High cliffs overlook the sea, wind howling at the top.",
+    "features": ["seabirds", "jagged edges", "grass tufts"]
+  },
+  "Sandy Beach 6": {
+    "connections": ["Cliffside 5"],
+    "description": "The final stretch of sand, quiet and remote.",
+    "features": ["seashells", "warm sand", "calm tide"]
+  }
+}
