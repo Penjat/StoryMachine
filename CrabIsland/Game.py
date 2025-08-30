@@ -125,35 +125,69 @@ items = {
 		"location": "Town Square"
 	}
 }
+# --- Character class ---
+class Character:
+	def __init__(self, name, strength, health, location, speed):
+		self.name = name
+		self.strength = strength
+		self.health = health
+		self.location = location
+		self.speed = speed
 
+	@classmethod
+	def from_json(cls, data: dict):
+		return cls(
+			name=data["name"],
+			strength=data["strength"],
+			health=data["health"],
+			location=data["location"],
+			speed=data["speed"],
+		)
+
+	def to_json(self) -> dict:
+		return {
+			"name": self.name,
+			"strength": self.strength,
+			"health": self.health,
+			"location": self.location,
+			"speed": self.speed,
+		}
+
+	def __repr__(self):
+		return f"<Character {self.name} ({self.health} HP @ {self.location})>"
+
+
+# --- Create NPCs from JSON ---
+npc_json = [
+	{"name": "Jorjo", "strength": 6, "health": 18, "location": "High Bluff", "speed": 4}
+]
+
+npcs = [Character.from_json(npc) for npc in npc_json]
+
+# --- Item helpers unchanged ---
 def items_at_location(location_name):
 	return [info["name"] for info in items.values() if info["location"] == location_name]
 
 def get_npcs_at_location(npcs_list, location):
-    return [npc for npc in npcs_list if npc["location"] == location]
+	return [npc for npc in npcs_list if npc.location == location]
+
+def get_npc_by_name(npcs_list, name):
+	return next((npc for npc in npcs_list if npc.name == name), None)
 
 
-def get_npc_by_name(npcs, name):
-    for npc in npcs:
-        if npc["name"] == name:
-            return npc
-    return None
-
-
+# --- Game Class ---
 class Game:
-	def __init__(self, character):
+	def __init__(self, character: Character):
 		print("starting game...")
-		self.character_name = "Jill"
-		self.is_playing = True
 		self.character = character
+		self.is_playing = True
 
 	@property
 	def current_location(self):
-		return self.character["location"]
+		return self.character.location
 
 	def set_location(self, location):
-		self.character["location"] = location
-
+		self.character.location = location
 
 	def process(self, choice1, choice2):
 		if choice1 == "move":
@@ -165,10 +199,10 @@ class Game:
 				print("not a connected location")
 
 		elif choice1 == "pickup":
-			location_items = items_at_location(current_location)
+			location_items = items_at_location(self.current_location)
 			if choice2 in location_items:
 				items[choice2]["location"] = "picked-up"
-				print(f"you move to {choice2}")
+				print(f"you pick up {choice2}")
 			else:
 				print(f"there is no {choice2} here...")
 
@@ -176,64 +210,51 @@ class Game:
 			inventory_items = items_at_location("picked-up")
 			if choice2 in inventory_items:
 				items[choice2]["location"] = self.current_location
-				item = items[choice2]["name"]
-				print(f"you drop the {item} at the {self.current_location}")
+				print(f"you drop {choice2} at {self.current_location}")
 			else:
 				print(f"you do not have a {choice2}")
 
 		elif choice1 == "attack":
 			npcs_here = get_npcs_at_location(npcs, self.current_location)
-
-			target = next((npc for npc in npcs_here if npc["name"] == choice2), None)
+			target = next((npc for npc in npcs_here if npc.name == choice2), None)
 
 			if target:
-			    print("Target found:", target)
-			    damage = self.character["strength"]
-			    target["health"] -= damage
-			    target_name = target["name"]
-			    main_character_name = self.character["name"]
-			    print(f"{main_character_name} deals {damage} damage to {target_name}.", target)
+				damage = self.character.strength
+				target.health -= damage
+				print(f"{self.character.name} deals {damage} damage to {target.name}. {target}")
 			else:
-			    print("No such NPC at this location")
+				print("No such NPC at this location")
 
 	def take_turn(self, choice1, choice2):
 		characters = npcs + [self.character]
-		sorted_chars = sorted(characters, key=lambda c: c["speed"], reverse=True)
+		sorted_chars = sorted(characters, key=lambda c: c.speed, reverse=True)
 
 		for character in sorted_chars:
 			if character == self.character:
 				self.process(choice1, choice2)
 			else:
-				main_character_name = self.character["name"]
-				character_name = character["name"]
-				print(f"{character_name} attacks {main_character_name}!")
-				damage = character["strength"]
-				self.character["health"] -= damage
+				print(f"{character.name} attacks {self.character.name}!")
+				damage = character.strength
+				self.character.health -= damage
 				print(f"deals {damage} damage!")
-				
 
 
-character = {
-	"name": "Spencer",
-	"strength": 22,
-	"health": 100,
-	"location": "High Bluff",
-	"speed": 9
-}		
+# --- Main ---
+character_data = {"name": "Spencer", "strength": 22, "health": 100, "location": "High Bluff", "speed": 9}
+character = Character.from_json(character_data)
 
 game = Game(character)
 
 while game.is_playing:
-	sleep(1) 
-	print(f"your location is: {game.current_location}")
+	sleep(1)
+	print(f"\nyour location is: {game.current_location}")
 	connected_locations = locations[game.current_location]["connections"]
 
-	print(f"{connected_locations}")
-	print(f"{items_at_location(game.current_location)}")
-	print(f"{get_npcs_at_location(npcs, game.current_location)}")
+	print(f"Connections: {connected_locations}")
+	print(f"Items: {items_at_location(game.current_location)}")
+	print(f"NPCs: {get_npcs_at_location(npcs, game.current_location)}")
 
 	choice1 = input("what do you do: ")
 	choice2 = input("+: ")
 
 	game.take_turn(choice1, choice2)
-	
