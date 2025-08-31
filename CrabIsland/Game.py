@@ -36,6 +36,13 @@ class Game:
 		# TODO: have multiple possible win conditions
 		return self.player.location == "THE END"
 
+	@property
+	def player_items(self):
+		"""Return all items that belong to the current player."""
+		if not self.current_player:
+			return []
+		return [item for item in self.items if item.location == self.current_player.name]
+
 	# --- Helper methods ---
 	def items_at_location(self, location_name):
 		return [item for item in self.items.values() if item.location == location_name]
@@ -124,10 +131,16 @@ class Game:
 		"""Return dictionary of available actions and valid options."""
 		actions = {}
 
-		# Attack
-		npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
-		if npcs_here:
-			actions["attack"] = {"options": [npc.name for npc in npcs_here]}
+
+
+		# # Attack
+		# npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
+		# if npcs_here:
+		# 	actions["attack"] = {"options": [npc.name for npc in npcs_here]}
+
+		# 	for item in self.player_items:
+		# 		for use in item.uses:
+		# 			actions[use["name"]] = 
 
 		# Move
 		connected_locations = self.locations[self.current_location].connections
