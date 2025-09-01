@@ -107,7 +107,7 @@ class Game:
 
 			for item in self.player_items:
 				for use in item.uses:
-					actions[use["name"]] = {"action": {"name": use["name"], "type": "attack", "speed": self.player.speed, "effects": use["effects"], "description": "" }, "targets": [npc.name for npc in npcs_here] }
+					actions[use["name"]] = {"action": {"name": use["name"], "type": use["type"], "speed": self.player.speed, "effects": use["effects"], "description": "" }, "targets": [npc.name for npc in npcs_here] }
 
 		# print(f"the player has {len(self.player_items)}")
 		# for item in self.player_items:
@@ -119,9 +119,7 @@ class Game:
 
 		return actions
 	def process_action(self, action, target_name):
-		print(f"action is:{action}, targetName:{target_name}")
 		action_type = action["type"]
-
 		
 		if action_type == "move":
 			connected = self.locations[self.current_location].connections
@@ -147,12 +145,71 @@ class Game:
 			else:
 				print(f"You do not have a {target_name}.")
 
-		elif action_type == "attack":
+		elif action_type == "target":
 			npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
 			target = next((npc for npc in npcs_here if npc.name == target_name), None)
-			attack_bonus = action["effects"].get("attack", 0)
 
-			damage = self.player.strength + attack_bonus
+			damage = 0
+
+			attack_bonus = action["effects"].get("attack", None)
+			if attack_bonus != None:
+				damage = self.player.strength + attack_bonus
+			
+			
+			# Long list of possible effects 
+
+			# smaller list of parameters that effect NPC behavouir
+			# Mood
+			# Like/Dislike
+			# Fear
+			# Anger
+			# Trust 
+			# Attraction
+
+
+
+			charm = action["effects"].get("charm", None)
+			# Like/Dislike
+			# Mood
+			# Trust 
+
+			intimidate = action["effects"].get("intimidate", None)
+
+
+			# Fear
+
+			# trick 
+
+			# Joke
+
+			# Plead
+
+			# Talk
+
+			# Reason
+
+			# Challenge
+
+			# Hide 
+
+			# Dance
+
+			# Juggle
+
+			# Sing
+
+			# Hypnotize
+
+			# Insult
+
+			# Compliment
+
+			# Misdirect
+
+			# Bluff
+
+
+
 
 
 			if target:
