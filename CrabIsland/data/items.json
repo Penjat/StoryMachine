@@ -1,5 +1,7 @@
+
+
 {
-  "Rusty Dagger": { "name": "Rusty Dagger", "location": "Jorjo" },
-  "Leather Boots": { "name": "Leather Boots", "location": "Jorjo" },
-  "Torn Map": { "name": "Torn Map", "location": "Jorjo" }
+  "Rusty Dagger": { "name": "Rusty Dagger", "location": "Spencer", "uses": [{"name": "stab", "effects": {"attack": 2} }]},
+  "Leather Boots": { "name": "Leather Boots", "location": "Jorjo", "uses": []},
+  "Torn Map": { "name": "Torn Map", "location": "Jorjo", "uses": [] }
 }
