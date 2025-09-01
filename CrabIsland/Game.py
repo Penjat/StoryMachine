@@ -61,7 +61,68 @@ class Game:
 		return next((npc for npc in self.npcs if npc.name == name), None)
 
 	# --- Player action processing ---
-	def process_action(self, action_type, target_name):
+
+
+	def get_possible_actions(self):
+		# title : action.name
+		# {action: {"name": "", "type": "", "speed":"", "effects": [], "description":"", }
+		actions = {}
+
+		## -----------basic actions
+
+		# Wait 
+		actions["wait"] = {"action": {"name": "wait", "type": "wait", "speed": self.player.speed, "effects": [], "description": "" }, "targets": ["..."] }
+
+		# Move
+		connected_locations = self.locations[self.current_location].connections
+		if connected_locations:
+			actions["move"] = {"action": {"name": "walk", "type": "move", "speed": self.player.speed, "effects": [], "description": "" }, "targets": connected_locations }
+
+		# Pickup
+		items_here = self.items_at_location(self.current_location)
+		if items_here:
+			actions["pickup"] = {"action": {"name": "pick up", "type": "pickup", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [item.name for item in items_here]}
+
+		# Drop
+		inventory_items = self.items_at_location("inventory")
+		if inventory_items:
+			actions["drop"] = {"action": {"name": "drop", "type": "drop", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [item.name for item in inventory_items]}
+		
+		
+		# Loot
+		dead_characters = self.npcs_at_location(self.current_location, is_alive=False)
+		if dead_characters:
+			lootable_items = [
+				item.name
+				for item in self.items.values()
+				if item.location in [npc.name for npc in dead_characters]
+			]
+			if lootable_items:
+				actions["loot"] = {action: {"name": "loot", "type": "loot", "speed": self.player.speed, "effects": [], "description": "" }, "targets": lootable_items + ["all"]}
+
+		# # Attack
+		# npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
+		# if npcs_here:
+		# 	actions["attack"] = {"options": [npc.name for npc in npcs_here]}
+
+		# 	for item in self.player_items:
+		# 		for use in item.uses:
+		# 			actions[use["name"]] = 
+
+		# print(f"the player has {len(self.player_items)}")
+		# for item in self.player_items:
+		# 	for use in item.uses:
+		# 		actions[use["name"]] = {"options": [npc.name for npc in npcs_here], "item": item, "use": use}
+
+		
+		
+
+		return actions
+	def process_action(self, action, target_name):
+		print(f"action is:{action}, targetName:{target_name}")
+		action_type = action["type"]
+
+		
 		if action_type == "move":
 			connected = self.locations[self.current_location].connections
 			if target_name in connected:
@@ -129,58 +190,6 @@ class Game:
 		damage = attacker.strength  # TODO: add modifiers
 		target.deal_dmg(damage, attacker.name)
 
-	def get_possible_actions(self):
-		# title : action.name
-		# {action: {"name": "", "type": "", "speed":"", "effects": [], "description":"", }
-		actions = {}
-
-		## -----------basic actions
-
-		# Move
-		connected_locations = self.locations[self.current_location].connections
-		if connected_locations:
-			actions["move"] = {"action": {"name": "walk", "type": "move", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [connected_locations] }
-
-		# Pickup
-		items_here = self.items_at_location(self.current_location)
-		if items_here:
-			actions["pickup"] = {"action": {"name": "pick up", "type": "pickup", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [item.name for item in items_here]}
-
-		# Drop
-		inventory_items = self.items_at_location("inventory")
-		if inventory_items:
-			actions["drop"] = {"action": {"name": "drop", "type": "drop", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [item.name for item in inventory_items]}
-		
-		
-		# Loot
-		dead_characters = self.npcs_at_location(self.current_location, is_alive=False)
-		if dead_characters:
-			lootable_items = [
-				item.name
-				for item in self.items.values()
-				if item.location in [npc.name for npc in dead_characters]
-			]
-			if lootable_items:
-				actions["loot"] = {action: {"name": "loot", "type": "loot", "speed": self.player.speed, "effects": [], "description": "" }, "targets": lootable_items + ["all"]}
-
-		# # Attack
-		# npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
-		# if npcs_here:
-		# 	actions["attack"] = {"options": [npc.name for npc in npcs_here]}
-
-		# 	for item in self.player_items:
-		# 		for use in item.uses:
-		# 			actions[use["name"]] = 
-
-		# print(f"the player has {len(self.player_items)}")
-		# for item in self.player_items:
-		# 	for use in item.uses:
-		# 		actions[use["name"]] = {"options": [npc.name for npc in npcs_here], "item": item, "use": use}
-
-		
-		
-
-		return actions
 
 	# --- Game loop parts ---
 	def take_turn(self, player_action):
@@ -217,9 +226,10 @@ class Game:
 
 			# Print available actions
 			for action_type, data in available_actions.items():
+				action = data["action"]
 				for option in data["targets"]:
 					print(f"{idx} - {action_type} {option}")
-					indexed_choices.append((action_type, option))
+					indexed_choices.append((action, option))
 					idx += 1
 
 			if not indexed_choices:

@@ -25,3 +25,4 @@ class Character:
         print(f"{source_name} deals {dmg} damage to {self.name}!")
         if self.isAlive == False:
             print(f"{self.name} was killed by {source_name}")
+
