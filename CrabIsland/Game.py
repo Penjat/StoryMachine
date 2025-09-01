@@ -98,12 +98,12 @@ class Game:
 				if item.location in [npc.name for npc in dead_characters]
 			]
 			if lootable_items:
-				actions["loot"] = {"action": {"name": "loot", "type": "loot", "speed": self.player.speed, "effects": [], "description": "" }, "targets": lootable_items + ["all"]}
+				actions["loot"] = {"action": {"name": "loot", "type": "loot", "speed": self.player.speed, "effects": {}, "description": "" }, "targets": lootable_items + ["all"]}
 
 		## Attack
 		npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
 		if npcs_here:
-			actions["attack"] = {"action": {"name": "attack", "type": "attack", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [npc.name for npc in npcs_here]}
+			actions["attack"] = {"action": {"name": "attack", "type": "attack", "speed": self.player.speed, "effects": {}, "description": "" }, "targets": [npc.name for npc in npcs_here]}
 
 			for item in self.player_items:
 				for use in item.uses:
@@ -150,9 +150,14 @@ class Game:
 		elif action_type == "attack":
 			npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
 			target = next((npc for npc in npcs_here if npc.name == target_name), None)
+			attack_bonus = action["effects"].get("attack", 0)
+
+			damage = self.player.strength + attack_bonus
+
 
 			if target:
-				self.attack(self.player, target)
+				# self.attack(self.player, target)
+				target.deal_dmg(damage, self.player.name)
 			else:
 				print("No such NPC here to attack.")
 		elif action_type == "loot":
@@ -183,13 +188,7 @@ class Game:
 					print(f"You loot {target_name} from {item.location}.")
 				else:
 					print(f"You cannot loot {target_name} here.")
-
-
 		
-
-	def attack(self, attacker, target):
-		damage = attacker.strength  # TODO: add modifiers
-		target.deal_dmg(damage, attacker.name)
 
 
 	# --- Game loop parts ---
@@ -204,7 +203,8 @@ class Game:
 					self.process_action(*player_action)
 			else:
 				if character.isAlive and character.location == self.player.location:
-					self.attack(character, self.player)
+					# self.attack(character, self.player)
+					print("todo: npc action")
 
 		# Check end conditions
 		if not self.player.isAlive:
