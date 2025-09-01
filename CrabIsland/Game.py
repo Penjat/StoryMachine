@@ -98,16 +98,16 @@ class Game:
 				if item.location in [npc.name for npc in dead_characters]
 			]
 			if lootable_items:
-				actions["loot"] = {action: {"name": "loot", "type": "loot", "speed": self.player.speed, "effects": [], "description": "" }, "targets": lootable_items + ["all"]}
+				actions["loot"] = {"action": {"name": "loot", "type": "loot", "speed": self.player.speed, "effects": [], "description": "" }, "targets": lootable_items + ["all"]}
 
-		# # Attack
-		# npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
-		# if npcs_here:
-		# 	actions["attack"] = {"options": [npc.name for npc in npcs_here]}
+		## Attack
+		npcs_here = self.npcs_at_location(self.current_location, is_alive=True)
+		if npcs_here:
+			actions["attack"] = {"action": {"name": "attack", "type": "attack", "speed": self.player.speed, "effects": [], "description": "" }, "targets": [npc.name for npc in npcs_here]}
 
-		# 	for item in self.player_items:
-		# 		for use in item.uses:
-		# 			actions[use["name"]] = 
+			for item in self.player_items:
+				for use in item.uses:
+					actions[use["name"]] = {"action": {"name": use["name"], "type": "attack", "speed": self.player.speed, "effects": use["effects"], "description": "" }, "targets": [npc.name for npc in npcs_here] }
 
 		# print(f"the player has {len(self.player_items)}")
 		# for item in self.player_items:
@@ -183,6 +183,7 @@ class Game:
 					print(f"You loot {target_name} from {item.location}.")
 				else:
 					print(f"You cannot loot {target_name} here.")
+
 
 		
 
