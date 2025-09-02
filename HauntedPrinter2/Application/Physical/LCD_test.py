@@ -131,27 +131,34 @@ icon_ref = ["\x00","\x01","\x02","\x03","\x04","\x05","\x06","\x07"]
 
 # Make a letter explosion
 for i in range(32):
-	spaces = "                                "
-	spaces 
+	
+	 
+output_array = [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]   
+
 
 
 
 # Everything flashing random
 
-	output_array = []#[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]
-	chars = string.printable[:-5]
-	# for i in range(32):
-	# 	output_array.append(random.choice(chars))
-	lcd.cursor_pos = (idy, idx)
-	lcd.write_string("hello")
+	# output_array = []#[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]
+	# chars = string.printable[:-5]
+	# # for i in range(32):
+	# # 	output_array.append(random.choice(chars))
+	# lcd.cursor_pos = (idy, idx)
+	# lcd.write_string("hello")
 while True:
 	# output_array = [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]
 	
-	idx = random.randrange(16)
-	idy = random.randrange(2)
-	lcd.cursor_pos = (idy, idx)
-	lcd.write_string(random.choice(icon_ref))
-	sleep(0.01)
+	# idx = random.randrange(16)
+	# idy = random.randrange(2)
+	# lcd.cursor_pos = (idy, idx)
+	# lcd.write_string(random.choice(icon_ref))
+
+
+
+
+
+	sleep(0.1)
 
 
 

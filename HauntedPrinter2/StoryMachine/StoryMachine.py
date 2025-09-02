@@ -5,6 +5,7 @@ from .MainMenu import Menu
 from .Subprograms.MazeMaker import *
 from .Subprograms.TarotReader import *
 from .Subprograms.AltTarot import *
+from .Subprograms.CellularAutomata import *
 # from .Subprograms.LiveALive import *
 from .Subprograms.LifeALife2 import LifeALife, Story, Chapter
 from .Subprograms.BluetoothConnect import BluetoothConnect
@@ -27,8 +28,8 @@ class StoryMachine:
 
 		# Set Up Buttons
 		control_service.main_button_subject.subscribe(lambda x: self.process_center_press(x))
-		control_service.left_knob_subject.subscribe(lambda x: self.process_left_knob(x))
-		control_service.right_knob_subject.subscribe(lambda x: self.process_right_knob(x))
+		control_service.left_knob_subject.pipe(ops.throttle_first(0.1)).subscribe(lambda x: self.process_left_knob(x))
+		control_service.right_knob_subject.pipe(ops.throttle_first(0.1)).subscribe(lambda x: self.process_right_knob(x))
 		
 
 	def process_left_knob(self, input):
@@ -106,7 +107,7 @@ class StoryMachine:
 			my_array =  self.camera_service.image_to_array2(self.camera_service.camera_image())
 			self.printer_service.print_array(my_array)
 
-		if output == "bible qoute":
+		if command == "bible qoute":
 		    printer.justify('L')
 		    printer.setSize('S')
 		    print("random bible quote")
@@ -117,6 +118,9 @@ class StoryMachine:
 		    line = random.choice(lines)
 		    print("{}".format(line.strip()))
 		    print_text("{}".format(line.strip()))
+
+		if command == "CellularAutomata":
+			self.sub_program = CellularAutomataGenerator(self.display_output, self.command_subject)
 
 		if command == "Tarot Reading":
 			self.sub_program = TarotReader(self.display_output, self.command_subject)

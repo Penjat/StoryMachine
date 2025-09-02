@@ -14,10 +14,10 @@ class Menu:
         self.display_output = display_output
         self.printer_output = printer_output
 
-        self.current_selection = 0.0
+        self.current_selection = 0
         # self.menu_items = ["take pic","contrast pic","Maze Maker","Tarot Reading", "print pic", "alt tarot", "LifeALife", "feed","quit", "test"]
 
-        self.menu_items = ["quit", "camera", "contrast camera", "Maze Maker", "Bluetooth"]
+        self.menu_items = ["quit", "camera", "contrast camera", "Maze Maker", "Bluetooth", "CellularAutomata"]
 
         self.left_knob_input.subscribe(lambda x: self.process_left_knob(x))
         self.right_knob_input.subscribe(lambda x: self.process_right_knob(x))
@@ -27,9 +27,9 @@ class Menu:
     def process_right_knob(self, event):
         print("right event")
         if event == "up":
-            self.current_selection += 0.5
+            self.current_selection += 1
         if event == "down":
-            self.current_selection -= 0.5
+            self.current_selection -= 1
 
         self.update_display()
         

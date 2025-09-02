@@ -51,6 +51,7 @@ class ControlServicePhysical:
 		self.main_button_subject = self.main_button.output_subject
 		self.left_knob_subject = self.left_knob.output_subject
 		self.right_knob_subject = self.right_knob.output_subject
+		self.previous_lcd_input = ""
 
 	def check_input(self):
 		self.right_knob.check_input()
@@ -210,16 +211,17 @@ class StoryMachinePhysical:
 	
 	def update_lcd(self, input):
 		if isinstance(input, list):
-			print("The value is a list.")
+			# print("The value is a list.")
 			self.lcd.clear()
 			self.lcd.cursor_pos = (0, 0)
 			self.lcd.write_string(input[0])
 			self.lcd.cursor_pos = (1, 0)
 			self.lcd.write_string(input[1])
 		elif isinstance(input, str):
-			print("The value is a string.")
+			# print("The value is a string.")
 			self.lcd.clear()
 			self.lcd.write_string(input)
+			self.previous_lcd_input = input
 			
 		else:
 			print("The value is neither a list nor a string.")
