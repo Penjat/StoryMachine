@@ -4,7 +4,7 @@ import copy
 from PIL import Image, ImageDraw, ImageFont
 from numpy import asarray
 import random
-from matplotlib import pyplot
+# from matplotlib import pyplot
 
 
 class MazeMaker:
@@ -18,7 +18,7 @@ class MazeMaker:
         self._maze_height = 50
         self._wall_size = 8.0
         
-        self.current_selection = 0.0
+        self.current_selection = 1
         self.menu_items = ["wall size", "create maze", "set width", "set height", "main menu"]
 
         print("created a maze MazeMaker")
@@ -198,9 +198,9 @@ class MazeMaker:
     def process_right_knob(self, event):
         global current_selection
         if event == "up":
-            self.current_selection += 0.5
+            self.current_selection += 1
         if event == "down":
-            self.current_selection -= 0.5
+            self.current_selection -= 1
         self.update_display()
     
 
@@ -209,21 +209,21 @@ class MazeMaker:
 
         if self.selection == "set width":
             if event == "up":
-                self._maze_width += 0.5
+                self._maze_width += 1
             if event == "down":
-                self._maze_width = max(5, self._maze_width - 0.5)
+                self._maze_width = max(5, self._maze_width - 1)
 
         if self.selection == "set height":
             if event == "up":
-                self._maze_height = min(46, self._maze_height + 0.5)
+                self._maze_height = min(46, self._maze_height + 1)
             if event == "down":
-                self._maze_height = max(5, self._maze_height - 0.5)
+                self._maze_height = max(5, self._maze_height - 1)
 
         if self.selection == "wall size":
             if event == "up":
-                self._wall_size = min(12, self._wall_size + 0.5)
+                self._wall_size = min(12, self._wall_size + 1)
             if event == "down":
-                self._wall_size = max(1, self._wall_size - 0.5)
+                self._wall_size = max(1, self._wall_size - 1)
         self.update_display()
 
     def process_center_press(self, event):
@@ -237,21 +237,21 @@ class MazeMaker:
             else:
                 print(self.selection)
 
-if __name__ == "__main__":
-    print("Maze maker demo...")
+# if __name__ == "__main__":
+#     print("Maze maker demo...")
 
-    display_subject = Subject()
-    printer_subject = Subject()
+#     display_subject = Subject()
+#     printer_subject = Subject()
 
-    display_subject.subscribe(lambda x: print(x))
-    printer_subject.subscribe(lambda x: print(x))
+#     display_subject.subscribe(lambda x: print(x))
+#     printer_subject.subscribe(lambda x: print(x))
 
-    generator = MazeMaker(display_subject, printer_subject)
-    generator.create_maze()
-    maze_array, start, end = generator.dijkstra()
-    generator.expand_maze()
-    pyplot.imshow(generator.maze_array)
-    pyplot.show()
+#     generator = MazeMaker(display_subject, printer_subject)
+#     generator.create_maze()
+#     maze_array, start, end = generator.dijkstra()
+#     generator.expand_maze()
+#     pyplot.imshow(generator.maze_array)
+#     pyplot.show()
 
 
 

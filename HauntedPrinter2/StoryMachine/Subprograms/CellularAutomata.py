@@ -1,7 +1,7 @@
 from rx import operators as ops
 from rx.subject import Subject
 import numpy as np
-from matplotlib import pyplot
+
 import random
 from PIL import Image, ImageDraw, ImageFont
 
@@ -12,12 +12,14 @@ class CellularAutomataGenerator:
 		self.display_output = display_output
 		self.printer_output = printer_output
 
-		self.menu_items = ["main menu", "print", "depth", "rules"]
-		self._current_selection = 0.0
+		self.menu_items = ["main menu","pixel_size", "print", "depth", "rule"]
+		self._current_selection = 0
 
-		self.depth = 384
+		self.depth = 100
 		self.rule = 75
-		self.pixel_size = 1
+		self.pixel_size = 4
+		self.last_line = np.zeros(384)
+		self.last_line[10] = 1
 
 	# Given an array and rules
 	# return an equal size array according to the rules
@@ -45,7 +47,7 @@ class CellularAutomataGenerator:
 			# index = row % len(rules)
 			rule = rules[index]
 			if row == 0:
-				array[0] = starting_line[:len(array[0])]
+				array[0] = self.last_line[:len(array[0])]
 			else:		
 				array[row] = self.getNextLine(array[row-1], rule)
 
@@ -56,26 +58,64 @@ class CellularAutomataGenerator:
 
 
 	def update_display(self):
-		output = ""
+		output = "CellularAutomata"
+		
 
-		self.display_output.on_next(output)
+		if self.selection == "main menu":
+			second_line = "main menu"
+		elif self.selection == "pixel_size":
+			second_line = f"cell: {self.pixel_size}px"
+		elif self.selection == "depth":
+			second_line = f"depth: {self.depth}"
+		elif self.selection == "print":
+			second_line = "print"
+		elif self.selection == "rule":
+			second_line = f"rule: {self.rule}"
+		else:
+			second_line = None
+
+		self.display_output.on_next(output+second_line)
+
+	@property
+	def selection(self):
+		return self.menu_items[int(self._current_selection)%len(self.menu_items)]
 
 	# --------------- Input Methods -----------------
 
 	def process_right_knob(self, event):
 		if event == "up":
-			self._current_selection += 0.5
+			self._current_selection += 1
 		if event == "down":
-			self._current_selection -= 0.5
+			self._current_selection -= 1
 		self.update_display()
 	
 
 	def process_left_knob(self, event):
-		print(event)
-		if event == "up":
-			self.rule += 1
-		if event == "down":
-			self.rule -= 1
+		print(f"the event is {event}")
+
+
+		if self.selection == "pixel_size":
+			if event == "up":
+				self.pixel_size += 1
+			elif event == "down":
+				self.pixel_size -= 1
+
+		elif self.selection == "depth":
+			if event == "up":
+				self.depth += 1
+			elif event == "down":
+				self.depth -= 1
+
+		elif self.selection == "print":
+			second_line = "print"
+
+		elif self.selection == "rule":
+			if event == "up":
+				self.rule += 1
+			elif event == "down":
+				self.rule -= 1
+
+		
  
 		self.update_display()
 
@@ -84,8 +124,13 @@ class CellularAutomataGenerator:
 			if self.selection == "main menu":
 				self.printer_output.on_next(self.selection)
 				return
-			if self.selection == "print card":
-				self.print_tarot_reading()
+
+			if self.selection == "print":
+				print("should print")
+				
+
+				cell_array = self.create_array(self.depth, self.last_line, [self.rule])
+				self.printer_output.on_next(("print array", cell_array))
 				
 			else:
 				print("did not recognize selection {self.selection}")
@@ -95,53 +140,54 @@ class CellularAutomataGenerator:
 
 
 
-if __name__ == "__main__":
-	display_subject = Subject()
-	printer_subject = Subject()
+# if __name__ == "__main__":
+# 	from matplotlib import pyplot
+# 	display_subject = Subject()
+# 	printer_subject = Subject()
 
-	display_subject.subscribe(lambda x: print(x))
-	printer_subject.subscribe(lambda x: print(x))
+# 	display_subject.subscribe(lambda x: print(x))
+# 	printer_subject.subscribe(lambda x: print(x))
 
-	generator = CellularAutomataGenerator(display_subject, printer_subject)
+# 	generator = CellularAutomataGenerator(display_subject, printer_subject)
 
-	first_line = np.zeros(384)
-	first_line[10] = 1
+# 	first_line = np.zeros(384)
+# 	first_line[10] = 1
 
-	number_of_sections = 6
-	rules = []
-	for i in range(number_of_sections):
-		# rules.append(random.randint(1, 254))
-		rules.append(random.choice([73,75,34,68]))
+# 	number_of_sections = 6
+# 	rules = []
+# 	for i in range(number_of_sections):
+# 		# rules.append(random.randint(1, 254))
+# 		rules.append(random.choice([73,75,34,68]))
 
 	
-	#73, 74
-	# pyplot.show()
+# 	#73, 74
+# 	# pyplot.show()
 
 
 
 
-	import numpy as np
-	from PIL import Image, ImageDraw, ImageFont
+# 	import numpy as np
+# 	from PIL import Image, ImageDraw, ImageFont
 
-	# Make a blank (black) image
-	width, height = 384, 400
-	img = Image.new("L", (width, height), color=0)  # "L" = 8-bit grayscale
+# 	# Make a blank (black) image
+# 	width, height = 384, 400
+# 	img = Image.new("L", (width, height), color=0)  # "L" = 8-bit grayscale
 
-	# Draw text
-	draw = ImageDraw.Draw(img)
-	font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size=12)
-	draw.text((20, 60), "Spencer Charles", font=font, fill=1, stroke_width=1, stroke_fill=0)
+# 	# Draw text
+# 	draw = ImageDraw.Draw(img)
+# 	font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", size=12)
+# 	draw.text((20, 60), "Spencer Charles", font=font, fill=1, stroke_width=1, stroke_fill=0)
 
-	# Convert to NumPy array
-	array = np.array(img)
+# 	# Convert to NumPy array
+# 	array = np.array(img)
 
-	print(array.shape)
-	print(array)
+# 	print(array.shape)
+# 	print(array)
 
-	# # Visualize with matplotlib
-	# import matplotlib.pyplot as plt
-	# plt.imshow(array, cmap="gray")
-	cell_array = generator.create_array(400, first_line, rules)
-	new_array = np.logical_or(cell_array, array).astype(int)
-	pyplot.imshow(new_array)
-	pyplot.show()
+# 	# # Visualize with matplotlib
+# 	# import matplotlib.pyplot as plt
+# 	# plt.imshow(array, cmap="gray")
+# 	cell_array = generator.create_array(400, first_line, rules)
+# 	new_array = np.logical_or(cell_array, array).astype(int)
+# 	pyplot.imshow(new_array)
+# 	pyplot.show()
