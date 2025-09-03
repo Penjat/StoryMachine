@@ -20,7 +20,7 @@ class StoryMachine:
 		self.command_subject.subscribe(lambda x: self.process_command(x))
 
 		# Set up Menu
-		self.menu = Menu(self.display_output, self.command_subject)
+		self.menu = Menu(self.display_output, self.command_subject, ["quit", "camera", "contrast camera", "Maze Maker", "Bluetooth", "CellularAutomata"])
 
 		# Services
 		self.printer_service = printer_service

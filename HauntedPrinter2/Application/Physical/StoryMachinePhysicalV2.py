@@ -24,6 +24,7 @@ from PIL import Image, ImageOps
 import numpy as np
 from numpy import asarray
 from StoryMachine import StoryMachine
+from LCDService import LCDService
 
 
 import os
@@ -192,48 +193,21 @@ class StoryMachinePhysical:
 		key = Keys.openai_key
 		self.story_machine = StoryMachine.StoryMachine(self.control_service, self.printer_service, self.camera_service, key)
 		
-		
-		self.lcd = self.set_up_lcd()
+		self.lcd_service = LCDService()
 
 		self.story_machine.display_output.subscribe(lambda x: self.update_lcd(x))
 
-		
-	def set_up_lcd(self):
-		# Set up LCD
-		lcdmode = 'i2c'
-		cols = 16
-		rows = 2
-		charmap = 'A00'
-		i2c_expander = 'PCF8574'
-		address = 0x27
-		port = 1
-		return i2c.CharLCD(i2c_expander, address, port=port, charmap=charmap, cols=cols, rows=rows)
 	
 	def update_lcd(self, input):
-		if isinstance(input, list):
-			# print("The value is a list.")
-			self.lcd.clear()
-			self.lcd.cursor_pos = (0, 0)
-			self.lcd.write_string(input[0])
-			self.lcd.cursor_pos = (1, 0)
-			self.lcd.write_string(input[1])
-		elif isinstance(input, str):
-			# print("The value is a string.")
-			self.lcd.clear()
-			self.lcd.write_string(input)
-			self.previous_lcd_input = input
-			
-		else:
-			print("The value is neither a list nor a string.")
-			print("update lcd")
+		self.lcd_service.update_display(input)
 		
 
 
 	def run_app(self):
 		
 		# update_display()
-		self.lcd.clear()
-		self.lcd.write_string("...wellcome...")
+		
+		self.lcd_service.write_string("wellcome")
 
 		sleep(1)
 		
