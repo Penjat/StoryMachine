@@ -4,7 +4,7 @@ import rx
 from rx import operators as ops
 from rx.subject import Subject
 import os
-from RingMenu import RingMenu
+
 
 class Menu:
     def __init__(self, display_output, printer_output, menu_items):
@@ -24,10 +24,9 @@ class Menu:
         self.right_knob_input.subscribe(lambda x: self.process_right_knob(x))
         self.center_button_input.subscribe(lambda x: self.process_press(x))
         
-    def update_display(self):
+    def update_time(self):
         delta_time = time.time() - self.last_time
         self.last_time = time.time()
-        
 
 
     def process_right_knob(self, event):

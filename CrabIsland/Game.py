@@ -24,7 +24,11 @@ class Game:
 		self.player = Character(**character_data)
 		self.is_playing = True
 
-		print("Game loaded!")
+		self.event_subject = event_subject = Subject()
+
+		event_subject.subscribe(lambda x: x.print_event())
+
+	
 
 	# --- Properties ---
 	@property
@@ -125,6 +129,7 @@ class Game:
 			connected = self.locations[self.current_location].connections
 			if target_name in connected:
 				self.player.location = target_name
+				self.event_subject.send(Event("move", target_name))
 				print(f"You move to {target_name}.")
 			else:
 				print("That location is not connected.")
