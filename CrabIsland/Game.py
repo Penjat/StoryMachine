@@ -1,8 +1,10 @@
 import json
 from time import sleep
 from character import Character
+from event import Event
 from item import Item
 from location import Location
+from rx.subject import Subject
 
 
 class Game:
@@ -111,7 +113,8 @@ class Game:
 
 			for item in self.player_items:
 				for use in item.uses:
-					actions[use["name"]] = {"action": {"name": use["name"], "type": use["type"], "speed": self.player.speed, "effects": use["effects"], "description": "" }, "targets": [npc.name for npc in npcs_here] }
+					if use["type"] == "target":
+						actions[use["name"]] = {"action": {"name": use["name"], "type": use["type"], "speed": self.player.speed, "effects": use["effects"], "description": "" }, "targets": [npc.name for npc in npcs_here] }
 
 		# print(f"the player has {len(self.player_items)}")
 		# for item in self.player_items:
@@ -124,12 +127,12 @@ class Game:
 		return actions
 	def process_action(self, action, target_name):
 		action_type = action["type"]
-		
+		print(action)
 		if action_type == "move":
 			connected = self.locations[self.current_location].connections
 			if target_name in connected:
 				self.player.location = target_name
-				self.event_subject.send(Event("move", target_name))
+				self.event_subject.on_next(Event("move", target_name))
 				print(f"You move to {target_name}.")
 			else:
 				print("That location is not connected.")
