@@ -5,7 +5,6 @@ from rx import operators as ops
 from rx.subject import Subject
 import os
 
-
 class Menu:
     def __init__(self, display_output, printer_output, menu_items):
         self.left_knob_input = Subject()
