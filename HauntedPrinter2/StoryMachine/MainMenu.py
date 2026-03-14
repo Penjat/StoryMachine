@@ -4,7 +4,7 @@ import rx
 from rx import operators as ops
 from rx.subject import Subject
 import os
-from RingMenu import RingMenu
+# from RingMenu import RingMenu
 
 class Menu:
     def __init__(self, display_output, printer_output, menu_items):
