@@ -171,11 +171,11 @@ img_array = np.asarray(img)
 array = np.mean(img_array, axis=2)
 
 shape = (726,384)
-noise_img = perlin_noise_2d(shape, scale=8, octaves=4, seed=123)
+noise_img = perlin_noise_2d(shape, scale=8, octaves=2, seed=123)
 
-array = array + colored_noise((726,384), -2, -100, 100)
-array[array <= 180] = 0
-array[array > 180] = 1
+array = colored_noise((726,384), -1, -50, 50) + colored_noise((726,384), 2, -100, 100)
+# array[array <= 180] = 0
+# array[array > 180] = 1
 
 
 plt.imshow(array)
